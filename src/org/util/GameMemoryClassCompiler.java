@@ -53,23 +53,30 @@ public class GameMemoryClassCompiler {
             }
             
         };
-        gameClass.write();
         diagnostics = new DiagnosticCollector<>();
         final Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(javaClass);
-        final CompilationTask task = javaCompiler.getTask(null, null, diagnostics, null, null, compilationUnits);
-        if(!task.call())
-            return false;
         try {
-            URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { new File("").toURI().toURL() });
-            compiledClass = Class.forName(gameClass.className, true, classLoader);
-        } catch (ClassNotFoundException ex)
-        {
-            System.err.println("Class not found: " + ex);
-            return false;
-        } catch (MalformedURLException ex)
-        {
-            System.err.println("Malformed class: " + ex);
-            return false;
+            System.out.println("JavaCompiler: " + javaCompiler == null);
+            System.out.println("Diag: " + diagnostics == null);
+            System.out.println("Compilation: " + compilationUnits == null);
+            final CompilationTask task = javaCompiler.getTask(null, null, diagnostics, null, null, compilationUnits);
+            if(!task.call())
+                return false;
+            try {
+                URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { new File("").toURI().toURL() });
+                compiledClass = Class.forName(gameClass.className, true, classLoader);
+            } catch (ClassNotFoundException ex)
+            {
+                System.err.println("Class not found: " + ex);
+                return false;
+            } catch (MalformedURLException ex)
+            {
+                System.err.println("Malformed class: " + ex);
+                return false;
+            }
+            return true;
+        } catch(final Exception e) {
+            e.printStackTrace();
         }
         return true;
     }
