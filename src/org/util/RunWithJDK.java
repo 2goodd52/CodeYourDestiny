@@ -13,6 +13,10 @@ import java.io.File;
  */
 public class RunWithJDK {
     
+    /**
+     * Runs the application with a version of JDK found on the users machine.
+     * @throws Exception if the running location or JDK file system cannot be found.
+     */
     public RunWithJDK() throws Exception
     {
         final String jdkLocation = locateJDK();
@@ -32,11 +36,21 @@ public class RunWithJDK {
         Runtime.getRuntime().exec(command);
     }
     
+    /**
+     * Gets the location of the currently running class
+     * @return The location of this class on the file system
+     * @throws Exception
+     */
     private File getRunningLocation() throws Exception
     {
         return new File(RunWithJDK.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
     }
     
+    /**
+     * Attempts to locate the users Java installations to find a version of JDK
+     * @return the location to a copy of JDK
+     * @throws Exception 
+     */
     private String locateJDK() throws Exception
     {
         for (char drive = 'A'; drive < 'Z'; drive++)
@@ -67,7 +81,7 @@ public class RunWithJDK {
     
     public static void main(final String[] args) throws Exception
     {
-        System.out.println(new RunWithJDK());
+        new RunWithJDK();
     }
             
     
