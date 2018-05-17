@@ -41,6 +41,9 @@ public class CarGame extends Game {
         getGeneratedClass().addVariables(this, car);
     }
     
+    /**
+     * Updates the game every tick
+     */
     @Override
     public void update()
     {
@@ -51,6 +54,10 @@ public class CarGame extends Game {
         car.move(currentLevel.getMap());
     }
     
+    /**
+     * Renders the game to the given Graphics object
+     * @param g the Graphics object to render the game into
+     */
     @Override
     public void render(final Graphics g)
     {
@@ -62,6 +69,9 @@ public class CarGame extends Game {
             userMessage.render(g, 240, 240);
     }
     
+    /**
+     * Resets the game entities
+     */
     @Override
     public void reset()
     {
@@ -69,6 +79,9 @@ public class CarGame extends Game {
         userMessage = null;
     }
     
+    /**
+     * Checks the final status of the game
+     */
     @Override
     public void finish()
     {
@@ -97,6 +110,10 @@ public class CarGame extends Game {
         UserInterface.getSingleton().resetGamePanel(true);
     }
     
+    /**
+     * Set the level of the game
+     * @param level the level to set the game to
+     */
     @Override
     public void setLevelNumber(final int level)
     {

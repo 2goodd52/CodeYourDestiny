@@ -36,16 +36,28 @@ public class Map {
         
     }
     
+    /**
+     * @param x the x coordinate of the Tile
+     * @param y the y coordinate of the Tile
+     * @return the Tile at the given coordinates
+     */
     public Tile getTileAt(final int x, final int y)
     {
         return tiles[x + y * height];
     }
 
+    /**
+     * @return the Tile associated with the finish of this Map
+     */
     public Tile getFinishTile()
     {
         return finishTile;
     }
     
+    /**
+     * Renders the map to the given Graphics object
+     * @param g the Graphics object to render the map
+     */
     public void render(final Graphics g)
     {
         for (final Tile t : tiles)

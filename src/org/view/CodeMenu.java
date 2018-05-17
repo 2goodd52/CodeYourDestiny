@@ -5,12 +5,17 @@
  */
 package org.view;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
+import org.model.Game;
 import org.model.interfaces.SolutionMethod;
 import org.view.components.CodeTextArea;
 
@@ -31,7 +36,7 @@ public class CodeMenu extends JPopupMenu {
         setOpaque(false);
     }
     
-    public void setEntries(final Object... objects)
+    public void setEntries(final Game game, final Object... objects)
     {
         ArrayList<String> entries = new ArrayList<>();
         for (final Object object : objects)
@@ -44,6 +49,8 @@ public class CodeMenu extends JPopupMenu {
                 {
                     Annotation annotation = method.getAnnotation(SolutionMethod.class);
                     SolutionMethod solution = (SolutionMethod) annotation;
+                    if(game.getLevelNumber() < solution.minLevel() || game.getLevelNumber() > solution.maxLevel())
+                        continue;
                     if(method.getParameterCount() == 0)
                         entries.add(includedClass.getSimpleName().toLowerCase() + "." + method.getName() + "();");
                     else
@@ -116,6 +123,37 @@ public class CodeMenu extends JPopupMenu {
         }
         suggestedList = new JList(suggestions.toArray());
         suggestedList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        suggestedList.addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(final MouseEvent event)
+            {
+                if(event.getClickCount() == 2)
+                {
+                    codeTextArea.replaceInputText();
+                }
+            }
+            
+        });
+        suggestedList.addKeyListener(new KeyAdapter() {
+            
+            @Override
+            public void keyReleased(final KeyEvent event)
+            {
+                switch (event.getKeyCode())
+                {
+                    case KeyEvent.VK_TAB:
+                    case KeyEvent.VK_ENTER:
+                    {
+                        if(isVisible())
+                            codeTextArea.replaceInputText();
+                        event.consume();
+                        break;
+                    }
+                }
+            }
+            
+        });
     }
     
     

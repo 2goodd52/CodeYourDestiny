@@ -60,7 +60,7 @@ public class MethodsPanel extends JPanel {
                 {
                     Annotation annotation = method.getAnnotation(SolutionMethod.class);
                     SolutionMethod solution = (SolutionMethod) annotation;
-                    if(game.getLevelNumber() < solution.level())
+                    if(game.getLevelNumber() < solution.minLevel() || game.getLevelNumber() > solution.maxLevel())
                         continue;
                     JLabel label = new JLabel(includedClass.getSimpleName().toLowerCase() + "." + method.getName() + "();", SwingConstants.CENTER);
                     label.setAlignmentX(Component.CENTER_ALIGNMENT);

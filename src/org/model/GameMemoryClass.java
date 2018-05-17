@@ -33,6 +33,10 @@ public class GameMemoryClass {
     public String className;
     public String classExtension;
     
+    /**
+     * Adds imports to be generated with the class source
+     * @param imports the imports to add
+     */
     public void addImports(final String... imports)
     {
         if(includedImports == null)
@@ -41,6 +45,10 @@ public class GameMemoryClass {
            includedImports.add(impor);
     }
     
+    /**
+     * Adds a list of class variables
+     * @param variables the array of class variables to add
+     */
     public void addVariables(final Object... variables)
     {
         if(includedVariables == null)
@@ -49,6 +57,10 @@ public class GameMemoryClass {
             includedVariables.add(variable);
     }
     
+    /**
+     * Adds method code to the main function of the generated class
+     * @param methods the lines to add to the main function
+     */
     public void addMethodCode(final String... methods)
     {
         if(includedMethodCode == null)
@@ -57,6 +69,9 @@ public class GameMemoryClass {
             includedMethodCode.add(method);
     }
     
+    /**
+     * @return an array of included variables in this class
+     */
     public Object[] getVariables()
     {
         if(includedVariables == null)
@@ -64,6 +79,10 @@ public class GameMemoryClass {
         return includedVariables.toArray();
     }
     
+    /**
+     * Generates a class using the imports, variables and method code
+     * @return a String representation of the class source code
+     */
     public String toSource()
     {
         final StringWriter buffer = new StringWriter();
@@ -162,11 +181,17 @@ public class GameMemoryClass {
         }
     }
     
+    /**
+     * @return a List<Diagnostic> of compilation errors
+     */
     public List<Diagnostic<? extends JavaFileObject>> getDiagnostics()
     {
         return compiler.getDiagnostics();
     }
     
+    /**
+     * Clears the method code list
+     */
     public void clearMethodCode()
     {
         if(includedMethodCode != null)
@@ -176,6 +201,9 @@ public class GameMemoryClass {
         }
     }
     
+    /**
+     * Generates the class source code and writes to a file
+     */
     public void write()
     {
         try {

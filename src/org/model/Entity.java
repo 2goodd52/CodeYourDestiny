@@ -27,6 +27,11 @@ public abstract class Entity {
     protected boolean errorThrown;
     protected String errorMessage;
     
+    /**
+     * Sets the location of the entity in the grid
+     * @param x Grid X coordinate
+     * @param y Grid Y coordinate
+     */
     public void setLocation(final int x, final int y)
     {
         this.tileX = x;
@@ -38,16 +43,27 @@ public abstract class Entity {
         this.errorThrown = false;
     }
     
+    /**
+     * @return true if an error has been declared by this Entity
+     */
     public boolean hasThrownError()
     {
         return errorThrown;
     }
     
+    /**
+     * @return the error message associated with this Entity
+     */
     public String getErrorMessage()
     {
         return errorMessage;
     }
     
+    /**
+     * Returns whether or not the Entity has collided with a specific Map tile
+     * @param map The map the entity is within
+     * @return Returns whether or not the Entity has collided with a specific Map tile
+     */
     public boolean hasCollided(final Map map)
     {
         return false;

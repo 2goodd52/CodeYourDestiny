@@ -35,7 +35,7 @@ public class CodeTextArea extends JTextArea {
         super();
         setLineWrap(true);
         codeMenu = new CodeMenu(this);
-        codeMenu.setEntries(game.getGeneratedClass().getVariables());
+        codeMenu.setEntries(game, game.getGeneratedClass().getVariables());
         errorMessage = new ErrorPopup();
         highlighter.setDrawsLayeredHighlights(false);
         this.addKeyListener(new KeyAdapter() {

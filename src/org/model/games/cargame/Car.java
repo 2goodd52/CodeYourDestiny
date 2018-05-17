@@ -43,6 +43,10 @@ public class Car extends Entity {
         }
     }
     
+    /**
+     * Renders the Entity to the given Graphics object
+     * @param g the Graphics object to render to
+     */
     public void render(final Graphics g)
     {
         if(image == null)
@@ -81,6 +85,11 @@ public class Car extends Entity {
         return rotated;
     }
     
+    /**
+     * Finds the closest pixel for collisions when moving and rotating the car
+     * @param direction direction the car is travelling
+     * @return the closest pixel, as a Point, of the rotated car
+     */
     public Point getClosestPixel(final int direction)
     {
         final BufferedImage rotated = getRotatedImage();
@@ -229,6 +238,9 @@ public class Car extends Entity {
         return new Point(0, 0);
     }
     
+    /**
+     * @return a Rectangle representing the collision area of the car
+     */
     public Rectangle getClosestImpact()
     {
         final Point topLeft = getClosestPixel(getDirection());
@@ -241,6 +253,9 @@ public class Car extends Entity {
         return new Rectangle(rectX - 2, rectY - 2, 6, 6);
     }
     
+    /**
+     * @return the current direction the car is heading
+     */
     private int getDirection()
     {
         if(destinationX == tileX && destinationY == tileY)
@@ -269,14 +284,23 @@ public class Car extends Entity {
         return -1;
     }  
     
-    @SolutionMethod(methodInfo = "Moves the car forward specific number of squares.", level = 5)
+    /**
+     * Moves the car forward a given number of tile
+     * @param number the number of tiles to move the car
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Moves the car forward specific number of squares.", minLevel = 5)
     public void forwardX(final int number) throws ErrorThrownException
     {
         for (int index = 0; index < number; index++)
             forward();
     }
         
-    @SolutionMethod(methodInfo = "Moves the car forward a single square.", hasImage = true)
+    /**
+     * Moves the car forward a single tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Moves the car forward a single square.", hasImage = true, maxLevel = 4)
     public void forward() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -316,14 +340,23 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
-    @SolutionMethod(methodInfo = "Reverses the car forward specific number of squares.", level = 5)
+    /**
+     * Moves the car backwards a number of tiles
+     * @param number the number of tiles to move the car backwards
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Reverses the car forward specific number of squares.", minLevel = 5)
     public void reverseX(final int number) throws ErrorThrownException
     {
         for (int index = 0; index < number; index++)
             reverse();
     }
     
-    @SolutionMethod(methodInfo = "Reverses the car a single square.", hasImage = true)
+    /**
+     * Moves the car backwards a single tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Reverses the car a single square.", hasImage = true, maxLevel = 4)
     public void reverse() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -363,7 +396,11 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
-    @SolutionMethod(methodInfo = "Turns the car to the left, the car will travel forward and left a square.", hasImage = true, level = 3)
+    /**
+     * Moves the car forward and left a tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Turns the car to the left, the car will travel forward and left a square.", hasImage = true, minLevel = 3)
     public void turnLeft() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -411,7 +448,11 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
-    @SolutionMethod(methodInfo = "Turns the car to the right, the car will travel forward and right a square.", hasImage = true, level = 3)
+    /**
+     * Moves the car forward and right a tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Turns the car to the right, the car will travel forward and right a square.", hasImage = true, minLevel = 3)
     public void turnRight() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -460,7 +501,11 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
-    @SolutionMethod(methodInfo = "Reverses the car to the left, the car will travel backwards and left a square.", hasImage = true, level = 4)
+    /**
+     * Moves the car backwards and left a tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Reverses the car to the left, the car will travel backwards and left a square.", hasImage = true, minLevel = 4)
     public void reverseLeft() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -508,7 +553,11 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
-    @SolutionMethod(methodInfo = "Reverses the car to the left, the car will travel backwards and left a square.", hasImage = true, level = 4)
+    /**
+     * Moves the car backwards and right a tile
+     * @throws ErrorThrownException if the car collides
+     */
+    @SolutionMethod(methodInfo = "Reverses the car to the left, the car will travel backwards and left a square.", hasImage = true, minLevel = 4)
     public void reverseRight() throws ErrorThrownException
     {
         switch ((int) angle / 90)
@@ -556,6 +605,10 @@ public class Car extends Entity {
             throw new ErrorThrownException("Car has crashed!");
     }
     
+    /**
+     * Moves the car a single pixel towards the destination location
+     * @param map The Map to move the car in
+     */
     public void move(final Map map)
     {
         if(hasCollided(map))
@@ -605,6 +658,12 @@ public class Car extends Entity {
         }
     }
     
+    /**
+     * Sets the location and angle of the car
+     * @param x the x coordinate of the car
+     * @param y the y coordinate of the car
+     * @param angle the angle of the car
+     */
     public void setLocation(final int x, final int y, final int angle)
     {
         super.setLocation(x, y);
@@ -614,7 +673,7 @@ public class Car extends Entity {
     
     /**
      * Returns whether or not the car has collided with any wall map tiles
-     * @param map The map object for this level
+     * @param map The map object for this minLevel
      * @return Whether or not the car has collided with a wall tile.
      */
     @Override

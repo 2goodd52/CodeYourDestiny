@@ -22,6 +22,8 @@ public @interface SolutionMethod {
     
     boolean hasImage() default false;
     
-    int level() default 0;
+    int minLevel() default 0;
+    
+    int maxLevel() default 1000;
     
 }
