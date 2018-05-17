@@ -84,8 +84,8 @@ public class GameList extends JPanel {
         levelPanel.add(levelDetails);
         final JButton playButton = new JButton("Play");
         playButton.setBackground(new Color(197, 187, 163));
-        //if(level.getNumber() > 1 && !game.getLevels()[level.getNumber() - 2].isCompleted())
-            //playButton.setEnabled(false);
+        if(level.getNumber() > 1 && !game.getLevels()[level.getNumber() - 2].isCompleted())
+            playButton.setEnabled(false);
         playButton.addActionListener(new ActionListener() {
             
             @Override
